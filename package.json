@@ -1,0 +1,28 @@
+{
+  "name": "examensalinas",
+  "version": "1.0.0",
+  "description": "examen grupo salinas endpoint",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "test"
+  },
+  "keywords": [
+    "node",
+    "api",
+    "express",
+    "sql"
+  ],
+  "author": "jerrystroke",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "json2csv": "^5.0.6",
+    "mssql": "^7.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
