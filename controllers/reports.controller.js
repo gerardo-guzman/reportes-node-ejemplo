@@ -1,9 +1,8 @@
 const { request, response } = require("express");
 const { getCampaigns } = require("../core/database");
-const fs = require('fs');
 
-const csvCreator = require("../utils/csvParser.util");
 const dateFormater = require("../utils/dateFormater.util");
+const CsvUtil = require("../utils/csvParser.util");
 
 const ReportController = async (req = request, res = response) => {
 
@@ -33,18 +32,15 @@ const ReportController = async (req = request, res = response) => {
         return prev;
     }, Object.create(null));
 
-    const csvs = csvCreator(groupedByCampaing);
-    // const buffered = csvs.map(csv => {
-    //     return Buffer.from(csv, )
-    // })
-    for (const csv in csvs) {
-        res.write(Buffer.from(csv))
-    }
-    return res.json({
-        message: 'Ok',
-        data: groupedByCampaing
-    })
+    const csvUtil = new CsvUtil(groupedByCampaing);
+    csvUtil.csvParser();
+    const data = csvUtil.zipFiles();
     
+    res.set('Content-Type', 'application/zip')
+    res.set('Content-Disposition', 'attachment; filename=reports.zip');
+    res.set('Content-Length', data.length);
+    res.end(data, 'binary');
+    return; 
 };
 
 module.exports = ReportController;
